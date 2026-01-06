@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_background">
+
+    <!-- Status Bar -->
+    <View
+        android:id="@+id/statusBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/md_theme_surface"/>
+
+    <!-- App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_surface"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_theme_surface"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/md_theme_on_surface"
+            app:menu="@menu/menu_home"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Fragment Container -->
+
+    <!-- Bottom Navigation -->
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="665dp"
+        android:layout_marginBottom="@dimen/bottom_nav_height"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_nav_height"
+        android:layout_gravity="bottom"
+        android:background="@color/md_theme_surface"
+        app:menu="@menu/bottom_navigation"
+        style="@style/Widget.GoPurchase.BottomNavigationView"
+        app:elevation="@dimen/elevation_lg"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

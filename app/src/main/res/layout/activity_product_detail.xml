@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_background">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/product_details"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Product Image -->
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/product_placeholder"
+                android:contentDescription="@string/app_name"/>
+
+            <!-- Product Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <!-- Product Name -->
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Name"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+                <!-- Rating & Reviews -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_sm">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="@color/md_theme_tertiary"
+                        android:contentDescription="@string/rating"/>
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.8"
+                        android:layout_marginStart="@dimen/spacing_xs"/>
+
+                    <TextView
+                        android:id="@+id/reviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(2456 reviews)"
+                        android:textColor="@color/md_theme_on_surface_variant"
+                        android:layout_marginStart="@dimen/spacing_xs"/>
+                </LinearLayout>
+
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$199.99"
+                    android:textColor="@color/md_theme_primary"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+                <!-- Stock -->
+                <TextView
+                    android:id="@+id/productStock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stok: 50"
+                    android:textColor="@color/md_theme_on_surface_variant"
+                    android:layout_marginTop="@dimen/spacing_sm"/>
+
+                <!-- Description -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:layout_marginTop="@dimen/spacing_lg"/>
+
+                <TextView
+                    android:id="@+id/productDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product description goes here"
+                    android:textColor="@color/md_theme_on_surface_variant"
+                    android:layout_marginTop="@dimen/spacing_sm"/>
+
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/colorChipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    app:singleSelection="true"/>
+
+                <!-- Quantity Selection -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quantity"
+                    android:layout_marginTop="@dimen/spacing_lg"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_sm">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDecrease"
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:icon="@drawable/min"
+                        app:iconSize="23dp"
+                        app:iconTint="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:text="1"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="@dimen/spacing_sm"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnIncrease"
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:icon="@drawable/plus"
+                        app:iconSize="23dp"
+                        app:iconTint="@android:color/black" />
+                </LinearLayout>
+
+                <!-- Spacer for buttons -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_md"
+        android:background="@color/md_theme_surface"
+        android:elevation="@dimen/elevation_md"
+        android:layout_gravity="bottom"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_to_cart"
+            app:cornerRadius="@dimen/corner_radius_md"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:padding="0dp"/>
+
+        <View
+            android:layout_width="@dimen/spacing_xs"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBuyNow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/buy_now"
+            app:cornerRadius="@dimen/corner_radius_md"
+            android:padding="0dp"/>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

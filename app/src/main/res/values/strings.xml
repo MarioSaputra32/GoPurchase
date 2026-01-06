@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GoPurchase</string>
+    <string name="app_tagline">Belanja Cerdas, Hidup Lebih Baik</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Temukan Produk</string>
+    <string name="onboarding_desc_1">Jelajahi ribuan produk dari merek ternama di seluruh dunia</string>
+    <string name="onboarding_title_2">Belanja Mudah</string>
+    <string name="onboarding_desc_2">Tambahkan ke keranjang dan checkout hanya dengan beberapa sentuhan</string>
+    <string name="onboarding_title_3">Pengiriman Cepat</string>
+    <string name="onboarding_desc_3">Pesanan Anda akan diantar langsung ke depan pintu dengan cepat</string>
+    <string name="next">Lanjut</string>
+    <string name="skip">Lewati</string>
+    <string name="get_started">Mulai</string>
+
+    <!-- Authentication -->
+    <string name="welcome_back">Selamat Datang Kembali</string>
+    <string name="login_subtitle">Masuk ke akun Anda</string>
+    <string name="create_account">Buat Akun</string>
+    <string name="register_subtitle">Daftar untuk memulai</string>
+    <string name="login">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="phone_number">Nomor Telepon</string>
+    <string name="forgot_password">Lupa Kata Sandi?</string>
+    <string name="dont_have_account">Belum punya akun?</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="sign_up">Daftar</string>
+    <string name="or">ATAU</string>
+    <string name="continue_with_google">Lanjutkan dengan Google</string>
+    <string name="continue_with_facebook">Lanjutkan dengan Facebook</string>
+
+    <!-- Input Hints -->
+    <string name="hint_full_name">Masukkan nama lengkap</string>
+    <string name="hint_email">Masukkan email</string>
+    <string name="hint_phone">Masukkan nomor telepon</string>
+    <string name="hint_password">Masukkan kata sandi</string>
+    <string name="hint_confirm_password">Masukkan ulang kata sandi</string>
+
+    <!-- Home -->
+    <string name="search_products">Cari produk…</string>
+    <string name="categories">Kategori</string>
+    <string name="featured_products">Produk Unggulan</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="special_offers">Penawaran Spesial</string>
+    <string name="trending_now">Sedang Tren</string>
+
+    <!-- Categories -->
+    <string name="all_categories">Semua Kategori</string>
+    <string name="electronics">Elektronik</string>
+    <string name="fashion">Fashion</string>
+    <string name="home_living">Rumah &amp; Hunian</string>
+    <string name="sports">Olahraga</string>
+    <string name="beauty">Kecantikan</string>
+    <string name="books">Buku</string>
+    <string name="toys">Mainan</string>
+    <string name="automotive">Otomotif</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Beranda</string>
+    <string name="nav_categories">Kategori</string>
+    <string name="nav_cart">Keranjang</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Product -->
+    <string name="product_details">Detail Produk</string>
+    <string name="add_to_cart">Tambah ke Keranjang</string>
+    <string name="buy_now">Beli Sekarang</string>
+    <string name="description">Deskripsi</string>
+    <string name="reviews">Ulasan</string>
+    <string name="specifications">Spesifikasi</string>
+    <string name="color">Warna</string>
+    <string name="size">Ukuran</string>
+    <string name="quantity">Jumlah</string>
+    <string name="in_stock">Tersedia</string>
+    <string name="out_of_stock">Stok Habis</string>
+    <string name="rating">Penilaian</string>
+
+    <!-- Cart -->
+    <string name="cart">Keranjang</string>
+    <string name="my_cart">Keranjang Saya</string>
+    <string name="cart_empty">Keranjang Anda kosong</string>
+    <string name="cart_empty_desc">Tambahkan produk untuk memulai</string>
+    <string name="start_shopping">Mulai Belanja</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="shipping">Pengiriman</string>
+    <string name="tax">Pajak</string>
+    <string name="total">Total</string>
+    <string name="proceed_to_checkout">Lanjut ke Pembayaran</string>
+    <string name="remove">Hapus</string>
+    <string name="select_all">Pilih Semua</string>
+    <string name="clear_cart">Kosongkan Keranjang</string>
+
+    <!-- Checkout -->
+    <string name="checkout">Checkout</string>
+    <string name="delivery_address">Alamat Pengiriman</string>
+    <string name="payment_method">Metode Pembayaran</string>
+    <string name="order_summary">Ringkasan Pesanan</string>
+    <string name="place_order">Buat Pesanan</string>
+    <string name="change">Ubah</string>
+    <string name="add_new_address">Tambah Alamat Baru</string>
+    <string name="credit_card">Kartu Kredit/Debit</string>
+    <string name="paypal">PayPal</string>
+    <string name="cash_on_delivery">Bayar di Tempat</string>
+    <string name="apply_coupon">Gunakan Kupon</string>
+    <string name="discount">Diskon</string>
+
+    <!-- Order -->
+    <string name="order_placed">Pesanan Berhasil Dibuat!</string>
+    <string name="order_success_message">Terima kasih atas pesanan Anda. Kami akan mengirimkan email konfirmasi segera.</string>
+    <string name="view_order">Lihat Pesanan</string>
+    <string name="continue_shopping">Lanjutkan Belanja</string>
+    <string name="my_orders">Pesanan Saya</string>
+    <string name="order_details">Detail Pesanan</string>
+    <string name="order_id">ID Pesanan</string>
+    <string name="order_date">Tanggal Pesanan</string>
+    <string name="order_status">Status Pesanan</string>
+    <string name="track_order">Lacak Pesanan</string>
+    <string name="cancel_order">Batalkan Pesanan</string>
+    <string name="reorder">Pesan Ulang</string>
+
+    <!-- Order Status -->
+    <string name="status_pending">Menunggu</string>
+    <string name="status_processing">Diproses</string>
+    <string name="status_shipped">Dikirim</string>
+    <string name="status_delivered">Terkirim</string>
+    <string name="status_cancelled">Dibatalkan</string>
+
+    <!-- Profile -->
+    <string name="my_profile">Profil Saya</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="account_settings">Pengaturan Akun</string>
+    <string name="notifications">Notifikasi</string>
+    <string name="addresses">Alamat</string>
+    <string name="payment_methods">Metode Pembayaran</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="help_support">Bantuan &amp; Dukungan</string>
+    <string name="about">Tentang</string>
+    <string name="terms_conditions">Syarat &amp; Ketentuan</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="logout">Keluar</string>
+    <string name="save">Simpan</string>
+    <string name="cancel">Batal</string>
+
+    <!-- Notifications -->
+    <string name="notification_order">Pembaruan Pesanan</string>
+    <string name="notification_promo">Promo</string>
+    <string name="notification_account">Akun</string>
+    <string name="mark_all_read">Tandai Semua Dibaca</string>
+    <string name="clear_all">Hapus Semua</string>
+
+    <!-- General -->
+    <string name="loading">Memuat…</string>
+    <string name="error">Kesalahan</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="no_internet">Tidak ada koneksi internet</string>
+    <string name="something_went_wrong">Terjadi kesalahan</string>
+    <string name="search">Cari</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Urutkan</string>
+    <string name="apply">Terapkan</string>
+    <string name="reset">Reset</string>
+    <string name="delete">Hapus</string>
+    <string name="share">Bagikan</string>
+    <string name="favorite">Favorit</string>
+
+    <!-- Validation Messages -->
+    <string name="error_empty_email">Email wajib diisi</string>
+    <string name="error_invalid_email">Masukkan email yang valid</string>
+    <string name="error_empty_password">Kata sandi wajib diisi</string>
+    <string name="error_short_password">Kata sandi minimal 6 karakter</string>
+    <string name="error_password_mismatch">Kata sandi tidak cocok</string>
+    <string name="error_empty_name">Nama wajib diisi</string>
+    <string name="error_empty_phone">Nomor telepon wajib diisi</string>
+
+</resources>
