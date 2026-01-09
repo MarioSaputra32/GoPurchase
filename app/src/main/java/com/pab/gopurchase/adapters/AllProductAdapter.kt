@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,10 +14,13 @@ import com.google.android.material.button.MaterialButton
 import com.pab.gopurchase.R
 import com.pab.gopurchase.models.Category
 import com.pab.gopurchase.models.Product
+import java.text.NumberFormat
+import java.util.Locale
 
 class AllProductAdapter(
     private val categories: List<Category>,
     private val products: List<Product>,
+    private val onProductClick: (Product) -> Unit,
     private val onAddToCartClick: (Product) -> Unit,
     private val onFavoriteClick: (Product) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -27,28 +31,28 @@ class AllProductAdapter(
     }
 
     private var selectedCategoryId = "all"
-    private val displayedProducts = products.toMutableList()
+    private val displayedProducts = mutableListOf<Product>()
 
-    // =========================
-    // CATEGORY VIEW HOLDER
-    // =========================
+    init {
+        displayedProducts.addAll(products)
+    }
+
+    // ================= CATEGORY VIEW =================
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val rvCategories: RecyclerView = itemView.findViewById(R.id.rvCategories)
-        val categoryAdapter = CategoryAdapter(categories) { category ->
-            selectedCategoryId = category.id
-            filterProducts()
-        }
+        private val rvCategories: RecyclerView = itemView.findViewById(R.id.rvCategories)
 
         init {
             rvCategories.layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            rvCategories.adapter = categoryAdapter
+
+            rvCategories.adapter = CategoryAdapter(categories) { category ->
+                selectedCategoryId = category.id
+                filterProducts()
+            }
         }
     }
 
-    // =========================
-    // PRODUCT VIEW HOLDER
-    // =========================
+    // ================= PRODUCT VIEW =================
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivProduct: ImageView = itemView.findViewById(R.id.productImage)
         val tvName: TextView = itemView.findViewById(R.id.productName)
@@ -56,12 +60,19 @@ class AllProductAdapter(
         val tvRating: TextView = itemView.findViewById(R.id.productRating)
         val tvReviews: TextView = itemView.findViewById(R.id.productReviews)
         val btnAddToCart: MaterialButton = itemView.findViewById(R.id.btnAddToCart)
-        val btnFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
+        val ivFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
+
+        fun updateFavorite(isFavorite: Boolean) {
+            ivFavorite.setColorFilter(
+                ContextCompat.getColor(
+                    itemView.context,
+                    if (isFavorite) R.color.red else R.color.gray
+                )
+            )
+        }
     }
 
-    // =========================
-    // INNER CATEGORY ADAPTER
-    // =========================
+    // ================= CATEGORY ADAPTER =================
     inner class CategoryAdapter(
         private val categories: List<Category>,
         private val onCategoryClick: (Category) -> Unit
@@ -74,15 +85,15 @@ class AllProductAdapter(
 
             init {
                 itemView.setOnClickListener {
-                    val position = bindingAdapterPosition
-                    if (position == RecyclerView.NO_POSITION) return@setOnClickListener
+                    val pos = bindingAdapterPosition
+                    if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
                     val prev = selectedPosition
-                    selectedPosition = position
+                    selectedPosition = pos
                     notifyItemChanged(prev)
                     notifyItemChanged(selectedPosition)
 
-                    onCategoryClick(categories[position])
+                    onCategoryClick(categories[pos])
                 }
             }
         }
@@ -96,6 +107,7 @@ class AllProductAdapter(
         override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
             val category = categories[position]
             holder.tvName.text = category.name
+
             if (position == selectedPosition) {
                 holder.tvName.setBackgroundResource(R.drawable.bg_category_selected)
                 holder.tvName.setTextColor(Color.WHITE)
@@ -108,71 +120,73 @@ class AllProductAdapter(
         override fun getItemCount(): Int = categories.size
     }
 
-    // =========================
-    // MAIN ADAPTER OVERRIDES
-    // =========================
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0) VIEW_TYPE_CATEGORY else VIEW_TYPE_PRODUCT
-    }
+    // ================= MAIN ADAPTER =================
+    override fun getItemViewType(position: Int): Int =
+        if (position == 0) VIEW_TYPE_CATEGORY else VIEW_TYPE_PRODUCT
 
-    override fun getItemCount(): Int = 1 + displayedProducts.size
+    override fun getItemCount(): Int = displayedProducts.size + 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
         return if (viewType == VIEW_TYPE_CATEGORY) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_container, parent, false)
-            CategoryViewHolder(view)
+            CategoryViewHolder(inflater.inflate(R.layout.item_container, parent, false))
         } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_product_card, parent, false)
-            ProductViewHolder(view)
+            ProductViewHolder(inflater.inflate(R.layout.item_product_card, parent, false))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
-            val product = displayedProducts[position - 1] // position 0 = categories
+            val product = displayedProducts[position - 1]
             bindProduct(holder, product)
         }
     }
 
-    // =========================
-    // BIND PRODUCT
-    // =========================
+    // ================= BIND PRODUCT =================
     private fun bindProduct(holder: ProductViewHolder, product: Product) {
         holder.tvName.text = product.name
-        holder.tvPrice.text = "Rp ${product.price}"
+        holder.tvPrice.text = "Rp ${
+            NumberFormat.getInstance(Locale("in", "ID")).format(product.price)
+        }"
         holder.tvRating.text = product.rating.toString()
         holder.tvReviews.text = "(${product.reviews})"
 
         Glide.with(holder.itemView.context)
             .load(product.imageUrl)
-            .placeholder(R.drawable.ic_launcher_foreground)
             .into(holder.ivProduct)
 
-        holder.btnAddToCart.setOnClickListener { onAddToCartClick(product) }
+        holder.updateFavorite(product.isFavorite)
 
-        holder.btnFavorite.setOnClickListener {
+        holder.btnAddToCart.isEnabled = product.stock > 0
+        holder.btnAddToCart.text =
+            if (product.stock > 0) "Add to Cart" else "Stok Habis"
+
+        holder.btnAddToCart.setOnClickListener {
+            onAddToCartClick(product)
+        }
+
+        holder.itemView.setOnClickListener {
+            onProductClick(product)
+        }
+
+        holder.ivFavorite.setOnClickListener {
             product.isFavorite = !product.isFavorite
-            holder.btnFavorite.setImageResource(
-                if (product.isFavorite) R.drawable.ic_favorite
-                else R.drawable.ic_favorite_border
-            )
+            holder.updateFavorite(product.isFavorite)
             onFavoriteClick(product)
         }
     }
 
-    // =========================
-    // FILTER PRODUCTS
-    // =========================
+    // ================= FILTER =================
     private fun filterProducts() {
         displayedProducts.clear()
+
         if (selectedCategoryId == "all") {
             displayedProducts.addAll(products)
         } else {
             val categoryName = categories.find { it.id == selectedCategoryId }?.name
             displayedProducts.addAll(products.filter { it.category == categoryName })
         }
+
         notifyDataSetChanged()
     }
 }

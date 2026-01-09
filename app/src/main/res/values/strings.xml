@@ -63,7 +63,7 @@
 
     <!-- Bottom Navigation -->
     <string name="nav_home">Beranda</string>
-    <string name="nav_categories">Kategori</string>
+    <string name="nav_product">Produk</string>
     <string name="nav_cart">Keranjang</string>
     <string name="nav_profile">Profil</string>
 

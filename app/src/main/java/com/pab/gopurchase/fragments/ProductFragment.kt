@@ -1,5 +1,6 @@
 package com.pab.gopurchase.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.pab.gopurchase.ProductDetailActivity
 import com.pab.gopurchase.R
 import com.pab.gopurchase.adapters.AllProductAdapter
 import com.pab.gopurchase.models.Category
@@ -18,6 +20,7 @@ class ProductFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AllProductAdapter
+    private lateinit var products: MutableList<Product>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,19 +35,28 @@ class ProductFragment : Fragment() {
 
     private fun setupAdapter() {
         val categories = getCategories()
-        val products = getProducts()
+        products = ProductData.products.toMutableList()
 
         adapter = AllProductAdapter(
             categories = categories,
             products = products,
+
+            // ================= OPEN PRODUCT DETAIL =================
+            onProductClick = { product ->
+                val intent = Intent(requireContext(), ProductDetailActivity::class.java)
+                intent.putExtra("PRODUCT_ID", product.id)
+                startActivity(intent)
+            },
+
+            // ================= ADD TO CART =================
             onAddToCartClick = { product ->
                 if (product.stock > 0) {
                     ProductData.addToCart(product, 1)
-                    product.stock--
 
-                    adapter.notifyItemChanged(
-                        products.indexOf(product) + 1
-                    )
+                    val position = products.indexOf(product)
+                    if (position != -1) {
+                        adapter.notifyItemChanged(position + 1)
+                    }
 
                     Snackbar.make(
                         requireView(),
@@ -59,15 +71,16 @@ class ProductFragment : Fragment() {
                     ).show()
                 }
             },
+
+            // ================= FAVORITE =================
             onFavoriteClick = { product ->
-                val msg = if (product.isFavorite)
-                    "ditambahkan ke favorit"
-                else
-                    "dihapus dari favorit"
+                val message =
+                    if (product.isFavorite) "ditambahkan ke favorit"
+                    else "dihapus dari favorit"
 
                 Snackbar.make(
                     requireView(),
-                    "${product.name} $msg",
+                    "${product.name} $message",
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
@@ -76,6 +89,7 @@ class ProductFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
+                // kategori full width
                 return if (position == 0) 2 else 1
             }
         }
@@ -85,6 +99,7 @@ class ProductFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
     }
 
+    // ================= DATA =================
     private fun getCategories(): List<Category> {
         return listOf(
             Category("all", "Semua", R.drawable.ic_category, 0),
@@ -95,9 +110,4 @@ class ProductFragment : Fragment() {
             Category("C5", "Rumah Tangga", R.drawable.ic_home, 1)
         )
     }
-
-    private fun getProducts(): List<Product> {
-        return ProductData.products
-    }
 }
-

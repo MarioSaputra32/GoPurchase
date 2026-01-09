@@ -56,12 +56,10 @@
             android:name=".ProductDetailActivity"
             android:exported="false" />
 
-
         <!-- Checkout -->
         <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
-
 
         <!-- search -->
         <activity
@@ -82,21 +80,7 @@
             android:name=".OrderDetailActivity"
             android:exported="false" />
 
-        <!-- Profile -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
 
-        <!-- Edit Profile -->
-        <activity
-            android:name=".EditProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- Notifications -->
-        <activity
-            android:name=".NotificationsActivity"
-            android:exported="false" />
 
     </application>
 

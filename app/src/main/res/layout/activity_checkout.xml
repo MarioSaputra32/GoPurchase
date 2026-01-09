@@ -84,15 +84,22 @@
                     <TextView
                         android:id="@+id/addressName"
                         android:layout_marginTop="8dp"
-                        android:text="Mario Saputra"
+                        android:text="-"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/addressDetail"
-                        android:text="Jl. Merdeka No.10, Jakarta"
+                        android:text="-"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/addressPhone"
+                        android:text="-"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,17 +130,17 @@
                         android:layout_marginTop="8dp">
 
                         <RadioButton
-                            android:text="Credit Card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <RadioButton
-                            android:text="PayPal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <RadioButton
                             android:text="Cash on Delivery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <RadioButton
+                            android:text="Transfer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <RadioButton
+                            android:text="E-Wallet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </RadioGroup>

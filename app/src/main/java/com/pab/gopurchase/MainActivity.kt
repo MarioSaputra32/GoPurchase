@@ -46,10 +46,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.action_notifications -> {
-                startActivity(Intent(this, NotificationsActivity::class.java))
-                true
-            }
+            R.id.action_notifications -> false // tidak melakukan apa-apa
+
 
             R.id.action_cart -> {
                 val cartFragment = CartFragment()

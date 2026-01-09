@@ -3,14 +3,26 @@ package com.pab.gopurchase
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.pab.gopurchase.adapters.CheckoutAdapter
+import com.pab.gopurchase.models.Order
+import com.pab.gopurchase.models.OrderStatus
+import com.pab.gopurchase.models.PaymentMethod
+import com.pab.gopurchase.models.ProductData
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderDetailActivity : AppCompatActivity() {
-    
+
+    // =========================
+    // VIEWS
+    // =========================
     private lateinit var toolbar: MaterialToolbar
     private lateinit var orderIdText: TextView
     private lateinit var orderDateText: TextView
@@ -25,22 +37,29 @@ class OrderDetailActivity : AppCompatActivity() {
     private lateinit var btnTrackOrder: MaterialButton
     private lateinit var btnCancelOrder: MaterialButton
     private lateinit var btnReorder: MaterialButton
-    
-    private var orderId = ""
-    
+
+    // =========================
+    // DATA
+    // =========================
+    private var orderId: String = ""
+    private var currentOrder: Order? = null
+
+    private val shippingCost = 15000.0
+    private val taxRate = 0.1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_detail)
-        
+
         orderId = intent.getStringExtra("ORDER_ID") ?: ""
-        
+
         initViews()
         setupToolbar()
         loadOrderData()
         displayOrderData()
         setupListeners()
     }
-    
+
     private fun initViews() {
         toolbar = findViewById(R.id.toolbar)
         orderIdText = findViewById(R.id.orderIdText)
@@ -57,59 +76,136 @@ class OrderDetailActivity : AppCompatActivity() {
         btnCancelOrder = findViewById(R.id.btnCancelOrder)
         btnReorder = findViewById(R.id.btnReorder)
     }
-    
+
     private fun setupToolbar() {
-        toolbar.setNavigationOnClickListener {
-            finish()
+        toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    // =========================
+    // LOAD DATA
+    // =========================
+    private fun loadOrderData() {
+        currentOrder = ProductData.orders.find { it.id == orderId }
+
+        if (currentOrder == null) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Error")
+                .setMessage("Order tidak ditemukan")
+                .setPositiveButton("OK") { _, _ -> finish() }
+                .show()
         }
     }
-    
-    private fun loadOrderData() {
-        // TODO: Load actual order from database/backend
-    }
-    
+
+    // =========================
+    // DISPLAY DATA
+    // =========================
     private fun displayOrderData() {
-        orderIdText.text = orderId
+        val order = currentOrder ?: return
+
+        orderIdText.text = order.id
+
+        val sdf = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("in", "ID"))
+        orderDateText.text = sdf.format(Date(order.createdAt))
+
+        setupStatusChip(order.status)
+        paymentMethodText.text = formatPaymentMethod(order.paymentMethod)
+
+        deliveryAddressText.text =
+            "${order.userName}\n${order.userPhone}\n${order.userAddress}"
+
+        // RecyclerView items
+        itemsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@OrderDetailActivity)
+            isNestedScrollingEnabled = false
+            adapter = CheckoutAdapter(order.items)
+        }
+
+        val subtotal = order.items.sumOf { it.getTotalPrice() }
+        val tax = subtotal * taxRate
+        val total = subtotal + shippingCost + tax
+
+        subtotalText.text = formatRupiah(subtotal)
+        shippingText.text = formatRupiah(shippingCost)
+        taxText.text = formatRupiah(tax)
+        totalText.text = formatRupiah(total)
     }
-    
+
+    // =========================
+    // STATUS CHIP
+    // =========================
+    private fun setupStatusChip(status: OrderStatus) {
+        when (status) {
+            OrderStatus.PENDING -> {
+                statusChip.text = "Menunggu"
+                statusChip.setChipBackgroundColorResource(R.color.md_theme_secondary_container)
+            }
+            OrderStatus.PROCESSING -> {
+                statusChip.text = "Diproses"
+                statusChip.setChipBackgroundColorResource(R.color.md_theme_primary_container)
+            }
+            OrderStatus.SHIPPED -> {
+                statusChip.text = "Dikirim"
+                statusChip.setChipBackgroundColorResource(R.color.md_theme_tertiary_container)
+            }
+            OrderStatus.DELIVERED -> {
+                statusChip.text = "Selesai"
+                statusChip.setChipBackgroundColorResource(R.color.success_green)
+            }
+            OrderStatus.CANCELLED -> {
+                statusChip.text = "Dibatalkan"
+                statusChip.setChipBackgroundColorResource(R.color.md_theme_error_container)
+            }
+        }
+    }
+
+    private fun formatPaymentMethod(method: PaymentMethod): String {
+        return when (method) {
+            PaymentMethod.CASH_ON_DELIVERY -> "Cash on Delivery"
+            PaymentMethod.TRANSFER -> "Transfer Bank"
+            PaymentMethod.E_WALLET -> "E-Wallet"
+        }
+    }
+
+    // =========================
+    // LISTENERS
+    // =========================
     private fun setupListeners() {
+
         btnTrackOrder.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle("Track Order")
-                .setMessage("Order tracking feature coming soon")
+                .setMessage("Fitur tracking akan segera tersedia")
                 .setPositiveButton("OK", null)
                 .show()
         }
-        
+
         btnCancelOrder.setOnClickListener {
-            showCancelOrderDialog()
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Batalkan Pesanan")
+                .setMessage("Apakah Anda yakin ingin membatalkan pesanan ini?")
+                .setPositiveButton("Ya") { _, _ ->
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("Pesanan Dibatalkan")
+                        .setMessage("Pesanan berhasil dibatalkan")
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+                .setNegativeButton("Tidak", null)
+                .show()
         }
-        
+
         btnReorder.setOnClickListener {
             MaterialAlertDialogBuilder(this)
-                .setTitle("Reorder")
-                .setMessage("Items have been added to your cart")
+                .setTitle("Pesan Ulang")
+                .setMessage("Item telah ditambahkan ke keranjang")
                 .setPositiveButton("OK", null)
                 .show()
         }
     }
-    
-    private fun showCancelOrderDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Cancel Order")
-            .setMessage("Are you sure you want to cancel this order?")
-            .setPositiveButton("Yes, Cancel") { _, _ ->
-                cancelOrder()
-            }
-            .setNegativeButton("No", null)
-            .show()
-    }
-    
-    private fun cancelOrder() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Order Cancelled")
-            .setMessage("Your order has been cancelled successfully")
-            .setPositiveButton("OK", null)
-            .show()
+
+    private fun formatRupiah(value: Double): String {
+        return NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+            .format(value)
+            .replace(",00", "")
     }
 }

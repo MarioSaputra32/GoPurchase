@@ -95,6 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"/>
@@ -124,6 +125,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
@@ -153,9 +155,41 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ===== Alamat ===== -->
+        <TextView
+            android:id="@+id/labelAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alamat"
+            android:textColor="@color/md_theme_on_background"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:layout_constraintTop_toBottomOf="@id/phoneInputLayout"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addressInputLayout"
+            style="@style/Widget.GoPurchase.TextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Masukan alamat"
+            android:layout_marginTop="@dimen/spacing_sm"
+            app:layout_constraintTop_toBottomOf="@id/labelAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addressInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ===== Password ===== -->
@@ -167,7 +201,7 @@
             android:textColor="@color/md_theme_on_background"
             android:fontFamily="sans-serif-medium"
             android:layout_marginTop="@dimen/spacing_md"
-            app:layout_constraintTop_toBottomOf="@id/phoneInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/addressInputLayout"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -183,6 +217,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
@@ -213,6 +248,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>

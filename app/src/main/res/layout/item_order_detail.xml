@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@color/md_theme_surface_variant"
+            android:src="@drawable/ic_image_placeholder"
+            android:scaleType="centerCrop" />
+
+        <!-- Product Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Product Name"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Rp 150.000"
+                android:textColor="@color/md_theme_on_surface_variant" />
+        </LinearLayout>
+
+        <!-- Quantity & Total -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Rp 300.000"
+                android:textColor="@color/md_theme_primary" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

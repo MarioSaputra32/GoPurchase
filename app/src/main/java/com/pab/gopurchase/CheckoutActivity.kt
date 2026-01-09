@@ -13,8 +13,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pab.gopurchase.adapters.CheckoutAdapter
-import com.pab.gopurchase.models.CartItem
-import com.pab.gopurchase.models.ProductData
+import com.pab.gopurchase.models.*
+import com.pab.gopurchase.utils.UserPreferences
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -33,6 +33,11 @@ class CheckoutActivity : AppCompatActivity() {
     private lateinit var taxText: TextView
     private lateinit var totalText: TextView
 
+    // 🔥 ADDRESS VIEW
+    private lateinit var addressName: TextView
+    private lateinit var addressDetail: TextView
+    private lateinit var addressPhone: TextView
+
     // =========================
     // DATA
     // =========================
@@ -40,7 +45,9 @@ class CheckoutActivity : AppCompatActivity() {
     private val shippingCost = 15000.0
     private val taxRate = 0.1
     private var totalPayment = 0.0
-    private var selectedPaymentMethod: String? = null
+
+    private var selectedPaymentMethod: PaymentMethod? = null
+    private lateinit var userPreferences: UserPreferences
 
     // =========================
     // LIFECYCLE
@@ -49,8 +56,11 @@ class CheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
 
+        userPreferences = UserPreferences(this)
+
         initViews()
         setupToolbar()
+        loadUserAddress()          // 🔥 AMBIL DATA USER
         loadCheckoutItems()
         setupRecyclerView()
         calculateSummary()
@@ -72,10 +82,32 @@ class CheckoutActivity : AppCompatActivity() {
         totalText = findViewById(R.id.totalText)
 
         paymentMethodGroup = findViewById(R.id.paymentMethodGroup)
+
+        // 🔥 ADDRESS
+        addressName = findViewById(R.id.addressName)
+        addressDetail = findViewById(R.id.addressDetail)
+        addressPhone = findViewById(R.id.addressPhone)
     }
 
     private fun setupToolbar() {
         toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    // =========================
+    // LOAD USER ADDRESS
+    // =========================
+    private fun loadUserAddress() {
+        val user = userPreferences.getUser()
+
+        if (user != null) {
+            addressName.text = user.name
+            addressDetail.text = user.address
+            addressPhone.text = user.phone
+        } else {
+            addressName.text = "-"
+            addressDetail.text = "-"
+            addressPhone.text = "-"
+        }
     }
 
     // =========================
@@ -85,12 +117,15 @@ class CheckoutActivity : AppCompatActivity() {
         val fromBuyNow =
             intent.getParcelableArrayListExtra<CartItem>("CART_ITEMS")
 
+        checkoutItems.clear() // 🔥 WAJIB
+
         if (!fromBuyNow.isNullOrEmpty()) {
             checkoutItems.addAll(fromBuyNow)
         } else {
             checkoutItems.addAll(ProductData.cartItems)
         }
     }
+
 
     // =========================
     // RECYCLER VIEW
@@ -101,17 +136,22 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     // =========================
-    // PAYMENT LISTENER
+    // PAYMENT METHOD
     // =========================
     private fun setupPaymentListener() {
         paymentMethodGroup.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = group.findViewById<RadioButton>(checkedId)
-            selectedPaymentMethod = radioButton.text.toString()
+
+            selectedPaymentMethod = when (radioButton.text.toString()) {
+                "Transfer Bank" -> PaymentMethod.TRANSFER
+                "E-Wallet" -> PaymentMethod.E_WALLET
+                else -> PaymentMethod.CASH_ON_DELIVERY
+            }
         }
     }
 
     // =========================
-    // CALCULATE
+    // CALCULATE SUMMARY
     // =========================
     private fun calculateSummary() {
         val subtotal = checkoutItems.sumOf { it.getTotalPrice() }
@@ -132,7 +172,6 @@ class CheckoutActivity : AppCompatActivity() {
     private fun setupListeners() {
         btnPlaceOrder.setOnClickListener {
 
-            // ❗ WAJIB PILIH PAYMENT
             if (selectedPaymentMethod == null) {
                 Snackbar.make(
                     findViewById(android.R.id.content),
@@ -147,11 +186,10 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     // =========================
-    // CONFIRM + STOK CHECK
+    // CONFIRM + STOCK CHECK
     // =========================
     private fun showConfirmDialog() {
 
-        // 🔎 CEK STOK
         for (item in checkoutItems) {
             val product = ProductData.products.find { it.id == item.product.id }
             if (product == null || product.stock < item.quantity) {
@@ -167,7 +205,7 @@ class CheckoutActivity : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setTitle("Konfirmasi Pesanan")
             .setMessage(
-                "Metode Pembayaran: $selectedPaymentMethod\n" +
+                "Metode Pembayaran: ${selectedPaymentMethod!!.name}\n" +
                         "Total: ${formatRupiah(totalPayment)}"
             )
             .setPositiveButton("Confirm") { _, _ ->
@@ -182,9 +220,23 @@ class CheckoutActivity : AppCompatActivity() {
     // =========================
     private fun processOrder() {
 
-        val order = ProductData.createOrder(checkoutItems)
+        val user = userPreferences.getUser()
+            ?: run {
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    "User tidak ditemukan",
+                    Snackbar.LENGTH_LONG
+                ).show()
+                return
+            }
 
-        // 🔥 Kurangi stok
+        val order = ProductData.createOrder(
+            checkoutItems,
+            user,
+            selectedPaymentMethod!!
+        )
+
+        // Kurangi stok
         for (item in checkoutItems) {
             val product = ProductData.products.find { it.id == item.product.id }
             product?.let {
@@ -193,7 +245,7 @@ class CheckoutActivity : AppCompatActivity() {
             }
         }
 
-        // ❌ Clear cart jika bukan Buy Now
+        // Clear cart jika bukan Buy Now
         if (intent.getParcelableArrayListExtra<CartItem>("CART_ITEMS") == null) {
             ProductData.clearCart()
         }
@@ -201,7 +253,7 @@ class CheckoutActivity : AppCompatActivity() {
         val intent = Intent(this, PaymentSuccessActivity::class.java)
         intent.putExtra("ORDER_ID", order.id)
         intent.putExtra("TOTAL_AMOUNT", order.totalAmount)
-        intent.putExtra("PAYMENT_METHOD", selectedPaymentMethod)
+        intent.putExtra("PAYMENT_METHOD", selectedPaymentMethod!!.name)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
