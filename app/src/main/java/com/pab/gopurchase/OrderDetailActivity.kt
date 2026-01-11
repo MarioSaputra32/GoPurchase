@@ -20,9 +20,9 @@ import java.util.*
 
 class OrderDetailActivity : AppCompatActivity() {
 
-    // =========================
+
     // VIEWS
-    // =========================
+
     private lateinit var toolbar: MaterialToolbar
     private lateinit var orderIdText: TextView
     private lateinit var orderDateText: TextView
@@ -38,9 +38,9 @@ class OrderDetailActivity : AppCompatActivity() {
     private lateinit var btnCancelOrder: MaterialButton
     private lateinit var btnReorder: MaterialButton
 
-    // =========================
+
     // DATA
-    // =========================
+
     private var orderId: String = ""
     private var currentOrder: Order? = null
 
@@ -81,9 +81,9 @@ class OrderDetailActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { finish() }
     }
 
-    // =========================
+
     // LOAD DATA
-    // =========================
+
     private fun loadOrderData() {
         currentOrder = ProductData.orders.find { it.id == orderId }
 
@@ -96,9 +96,8 @@ class OrderDetailActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
     // DISPLAY DATA
-    // =========================
+
     private fun displayOrderData() {
         val order = currentOrder ?: return
 
@@ -130,28 +129,26 @@ class OrderDetailActivity : AppCompatActivity() {
         totalText.text = formatRupiah(total)
     }
 
-    // =========================
     // STATUS CHIP
-    // =========================
     private fun setupStatusChip(status: OrderStatus) {
         when (status) {
-            OrderStatus.PENDING -> {
+            OrderStatus.MENUNGGU -> {
                 statusChip.text = "Menunggu"
                 statusChip.setChipBackgroundColorResource(R.color.md_theme_secondary_container)
             }
-            OrderStatus.PROCESSING -> {
+            OrderStatus.DIPROSES -> {
                 statusChip.text = "Diproses"
                 statusChip.setChipBackgroundColorResource(R.color.md_theme_primary_container)
             }
-            OrderStatus.SHIPPED -> {
+            OrderStatus.DIKIRIM -> {
                 statusChip.text = "Dikirim"
                 statusChip.setChipBackgroundColorResource(R.color.md_theme_tertiary_container)
             }
-            OrderStatus.DELIVERED -> {
+            OrderStatus.DIANTAR -> {
                 statusChip.text = "Selesai"
                 statusChip.setChipBackgroundColorResource(R.color.success_green)
             }
-            OrderStatus.CANCELLED -> {
+            OrderStatus.DIBATALKAN -> {
                 statusChip.text = "Dibatalkan"
                 statusChip.setChipBackgroundColorResource(R.color.md_theme_error_container)
             }
@@ -166,9 +163,9 @@ class OrderDetailActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
+
     // LISTENERS
-    // =========================
+
     private fun setupListeners() {
 
         btnTrackOrder.setOnClickListener {

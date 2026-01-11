@@ -3,10 +3,10 @@ package com.pab.gopurchase.models
 
 object ProductData {
 
-    // ===================== PRODUCT LIST =====================
+
     val products = mutableListOf(
 
-        // ===== ELEKTRONIK =====
+
         Product(
             "E001",
             "Smartphone Android X",
@@ -63,7 +63,7 @@ object ProductData {
             150
         ),
 
-        // ===== FASHION =====
+
         Product(
             "F001",
             "Jaket Hoodie Pria",
@@ -120,7 +120,7 @@ object ProductData {
             350
         ),
 
-        // ===== MAKANAN =====
+
         Product(
             "M001",
             "Snack Coklat Premium",
@@ -177,7 +177,6 @@ object ProductData {
             500
         ),
 
-        // ===== KESEHATAN =====
         Product(
             "K001",
             "Vitamin C 500mg",
@@ -234,7 +233,6 @@ object ProductData {
             650
         ),
 
-        // ===== RUMAH TANGGA =====
         Product(
             "R001",
             "Rice Cooker Digital",
@@ -292,7 +290,6 @@ object ProductData {
         )
     )
 
-    // ===================== CART =====================
     val cartItems = mutableListOf<CartItem>()
 
     fun addToCart(product: Product, qty: Int) {
@@ -306,29 +303,23 @@ object ProductData {
 
     fun clearCart() = cartItems.clear()
 
-    fun getCartTotal(): Double =
-        cartItems.sumOf { it.getTotalPrice() }
 
-    // ===================== ORDER =====================
     val orders = mutableListOf<Order>()
 
     fun createOrder(
         items: List<CartItem>,
         user: User,
-        paymentMethod: PaymentMethod
+        paymentMethod: PaymentMethod,
+        totalPayment: Double
     ): Order {
-
-        // Subtotal (tanpa ongkir & pajak)
-        val subtotal = items.sumOf { it.getTotalPrice() }
 
         val order = Order(
             id = System.currentTimeMillis().toString(),
-            items = items.map { it.copy() }, // snapshot item
-            totalAmount = subtotal,
-            status = OrderStatus.PROCESSING,
+            items = items.map { it.copy() },
+            totalAmount = totalPayment,
+            status = OrderStatus.DIPROSES,
             createdAt = System.currentTimeMillis(),
 
-            // 🔥 SNAPSHOT DATA USER
             userName = user.name,
             userPhone = user.phone,
             userAddress = user.address,
@@ -339,4 +330,5 @@ object ProductData {
         orders.add(order)
         return order
     }
+
 }

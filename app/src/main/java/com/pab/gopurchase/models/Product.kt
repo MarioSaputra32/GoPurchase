@@ -3,9 +3,6 @@ package com.pab.gopurchase.models
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-// =======================
-// PRODUCT
-// =======================
 @Parcelize
 data class Product(
     val id: String,
@@ -21,9 +18,7 @@ data class Product(
 ) : Parcelable
 
 
-// =======================
-// CART ITEM
-// =======================
+
 @Parcelize
 data class CartItem(
     val product: Product,
@@ -42,16 +37,14 @@ data class User(
     val address: String
 )
 
-// =======================
-// ENUMS
-// =======================
+
 @Parcelize
 enum class OrderStatus : Parcelable {
-    PENDING,
-    PROCESSING,
-    SHIPPED,
-    DELIVERED,
-    CANCELLED
+    MENUNGGU,
+    DIPROSES,
+    DIKIRIM,
+    DIANTAR,
+    DIBATALKAN
 }
 
 @Parcelize
@@ -68,10 +61,6 @@ data class Category(
     val productCount: Int
 )
 
-
-// =======================
-// ORDER
-// =======================
 
 @Parcelize
 data class Order(

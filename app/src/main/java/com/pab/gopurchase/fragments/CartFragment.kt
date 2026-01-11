@@ -14,7 +14,6 @@ import com.google.android.material.button.MaterialButton
 import com.pab.gopurchase.CheckoutActivity
 import com.pab.gopurchase.R
 import com.pab.gopurchase.adapters.CartAdapter
-import com.pab.gopurchase.models.CartItem
 import com.pab.gopurchase.models.ProductData
 import java.text.NumberFormat
 import java.util.Locale
@@ -30,12 +29,15 @@ class CartFragment : Fragment() {
     private lateinit var btnCheckout: MaterialButton
 
     private lateinit var cartAdapter: CartAdapter
-    private val shippingFee = 10_000.0
+    private val shippingFee = 15_000.0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_cart, container, false)
+    ): View {
+        return inflater.inflate(R.layout.fragment_cart, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

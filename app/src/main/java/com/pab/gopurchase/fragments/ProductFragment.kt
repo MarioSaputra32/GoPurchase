@@ -102,7 +102,7 @@ class ProductFragment : Fragment() {
     // ================= DATA =================
     private fun getCategories(): List<Category> {
         return listOf(
-            Category("all", "Semua", R.drawable.ic_category, 0),
+            Category("all", "Semua", R.drawable.product, 0),
             Category("C1", "Elektronik", R.drawable.ic_category, 4),
             Category("C2", "Fashion", R.drawable.ic_fasion, 3),
             Category("C3", "Makanan", R.drawable.ic_food, 2),

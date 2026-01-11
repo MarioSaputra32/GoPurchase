@@ -28,15 +28,11 @@ class PaymentSuccessActivity : AppCompatActivity() {
         displayOrderInfo()
         setupListeners()
 
-        // 🔥 Handle back button properly (NO WARNING)
         onBackPressedDispatcher.addCallback(this) {
             navigateToHome()
         }
     }
 
-    // =========================
-    // INIT VIEW
-    // =========================
     private fun initViews() {
         orderId = findViewById(R.id.orderId)
         totalAmount = findViewById(R.id.totalAmount)
@@ -44,27 +40,17 @@ class PaymentSuccessActivity : AppCompatActivity() {
         btnContinueShopping = findViewById(R.id.btnContinueShopping)
     }
 
-    // =========================
-    // LOAD DATA
-    // =========================
     private fun loadOrderData() {
-        orderIdValue = intent.getStringExtra("ORDER_ID") ?: "#ORD-2026-001234"
+        orderIdValue = intent.getStringExtra("ORDER_ID") ?: "-"
         totalAmountValue = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0)
     }
 
-    // =========================
-    // DISPLAY
-    // =========================
     private fun displayOrderInfo() {
         orderId.text = orderIdValue
         totalAmount.text = formatRupiah(totalAmountValue)
     }
 
-    // =========================
-    // LISTENERS
-    // =========================
     private fun setupListeners() {
-
         btnViewOrder.setOnClickListener {
             val intent = Intent(this, OrderDetailActivity::class.java)
             intent.putExtra("ORDER_ID", orderIdValue)
@@ -76,9 +62,6 @@ class PaymentSuccessActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
-    // NAVIGATION
-    // =========================
     private fun navigateToHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -86,12 +69,8 @@ class PaymentSuccessActivity : AppCompatActivity() {
         finish()
     }
 
-    // =========================
-    // RUPIAH FORMAT
-    // =========================
     private fun formatRupiah(value: Double): String {
-        val localeID = Locale("in", "ID")
-        val formatter = NumberFormat.getCurrencyInstance(localeID)
+        val formatter = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
         return formatter.format(value).replace(",00", "")
     }
 }

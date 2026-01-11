@@ -17,19 +17,17 @@ class UserPreferences(context: Context) {
         private const val KEY_IS_LOGIN = "is_login"
     }
 
-    // Simpan data user (register)
     fun saveUser(name: String, email: String, phone: String, address: String, password: String) {
         prefs.edit().apply {
             putString(KEY_NAME, name)
             putString(KEY_EMAIL, email)
             putString(KEY_PHONE, phone)
             putString(KEY_ADDRESS, address)
-            putString(KEY_PASSWORD, password) // NOTE: hanya demo, password disimpan plaintext
+            putString(KEY_PASSWORD, password)
             apply()
         }
     }
 
-    // Login user, kembalikan true jika email & password cocok
     fun login(email: String, password: String): Boolean {
         val savedEmail = prefs.getString(KEY_EMAIL, null)
         val savedPassword = prefs.getString(KEY_PASSWORD, null)
@@ -39,25 +37,20 @@ class UserPreferences(context: Context) {
         return success
     }
 
-    // Set status login
     fun setLogin(status: Boolean) {
         prefs.edit().putBoolean(KEY_IS_LOGIN, status).apply()
     }
 
-    // Cek apakah user sedang login
     fun isLogin(): Boolean {
         return prefs.getBoolean(KEY_IS_LOGIN, false)
     }
 
-    // Logout user
     fun logout() {
         prefs.edit()
             .putBoolean(KEY_IS_LOGIN, false)
             .apply()
     }
 
-
-    // Ambil data user
     fun getUser(): User? {
         val name = prefs.getString(KEY_NAME, null) ?: return null
         val email = prefs.getString(KEY_EMAIL, null) ?: return null

@@ -12,7 +12,6 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/onboarding_title_1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

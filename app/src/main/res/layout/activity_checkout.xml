@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_background">
 
-    <!-- ================= APP BAR ================= -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +19,6 @@
             app:navigationIcon="@drawable/ic_arrow_back"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- ================= CONTENT ================= -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +31,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ===== ORDER ITEMS (RecyclerView) ===== -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +58,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ===== ADDRESS ===== -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +72,7 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:text="Delivery Address"
+                        android:text="Alamat Pengriman"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -103,7 +99,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ===== PAYMENT METHOD ===== -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +113,7 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:text="Payment Method"
+                        android:text="Metode Pembayaran"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -147,7 +142,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ===== ORDER SUMMARY ===== -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +156,7 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:text="Order Summary"
+                        android:text="Ringkasan Pesanan"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -174,7 +168,7 @@
                         android:layout_marginTop="8dp">
 
                         <TextView
-                            android:text="Total"
+                            android:text="Total Harga Bar"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"/>
@@ -253,7 +247,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- ================= BUTTON ================= -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

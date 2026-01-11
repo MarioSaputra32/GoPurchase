@@ -5,11 +5,8 @@
     <string name="app_tagline">Belanja Cerdas, Hidup Lebih Baik</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title_1">Temukan Produk</string>
     <string name="onboarding_desc_1">Jelajahi ribuan produk dari merek ternama di seluruh dunia</string>
-    <string name="onboarding_title_2">Belanja Mudah</string>
     <string name="onboarding_desc_2">Tambahkan ke keranjang dan checkout hanya dengan beberapa sentuhan</string>
-    <string name="onboarding_title_3">Pengiriman Cepat</string>
     <string name="onboarding_desc_3">Pesanan Anda akan diantar langsung ke depan pintu dengan cepat</string>
     <string name="next">Lanjut</string>
     <string name="skip">Lewati</string>
