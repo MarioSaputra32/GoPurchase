@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
         cardWishlist.setOnClickListener { showComingSoon("Wishlist") }
         cardSettings.setOnClickListener { showComingSoon("Settings") }
         cardHelp.setOnClickListener { showComingSoon("Help & Support") }
-        cardAbout.setOnClickListener { showAboutDialog() }
+        cardAbout.setOnClickListener { showComingSoon(" About ") }
         cardLogout.setOnClickListener { showLogoutDialog() }
     }
 
